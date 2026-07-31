@@ -1,1955 +1,575 @@
 /* ==================================
-        N PROJECT PREMIUM CSS
+       💖 N PROJECT PREMIUM CSS
 ================================== */
 
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+/* =====================
+      COLOR SYSTEM 🎨
+===================== */
+:root {
+  --main-color: #ff69b4;
+  --second-color: #ff1493;
+  --light-color: #ffc1e8;
+  --shadow-color: rgba(255, 20, 147, 0.45);
 }
 
+/* =====================
+        RESET
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
+html {
+  scroll-behavior: smooth;
+}
 
-body{
+::selection {
+  background: var(--main-color);
+  color: white;
+}
 
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    overflow-x:hidden;
-
-
-    background:
-
-    linear-gradient(
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  background: linear-gradient(
     135deg,
-    #ff8dcc,
-    #ffc1e8,
-    #ffe8f6
-    );
-
-
-    background-size:400% 400%;
-
-
-    animation:bgMove 12s infinite alternate;
-
-
-    transition:.5s;
-
+    var(--main-color),
+    var(--light-color),
+    #fff
+  );
+  background-size: 400% 400%;
+  animation: bgMove 12s infinite alternate;
+  transition: 0.5s;
 }
 
-
-
-
-@keyframes bgMove{
-
-
-0%{
-
-background-position:left;
-
+@keyframes bgMove {
+  0% {
+    background-position: left;
+  }
+  100% {
+    background-position: right;
+  }
 }
-
-
-100%{
-
-background-position:right;
-
-}
-
-
-}
-
-
-
-
-
-
-
 
 /* =====================
-   BACKGROUND BUBBLES
+    FLOATING BACKGROUND
 ===================== */
-
-
-.background{
-
-position:fixed;
-
-width:100%;
-height:100%;
-
-left:0;
-top:0;
-
-
-overflow:hidden;
-
-z-index:-1;
-
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  z-index: -1;
 }
 
-
-
-
-.background span{
-
-
-position:absolute;
-
-bottom:-100px;
-
-
-width:50px;
-height:50px;
-
-
-border-radius:50%;
-
-
-
-background:
-
-rgba(255,255,255,.25);
-
-
-
-box-shadow:
-
-0 0 25px white,
-0 0 50px pink;
-
-
-
-animation:
-
-bubble 18s linear infinite;
-
-
+.background span {
+  position: absolute;
+  bottom: -100px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 25px white, 0 0 50px var(--main-color);
+  animation: bubble 18s linear infinite;
 }
 
+.background span:nth-child(1) { left: 10%; animation-duration: 13s; }
+.background span:nth-child(2) { left: 25%; width: 80px; height: 80px; animation-duration: 18s; }
+.background span:nth-child(3) { left: 45%; animation-duration: 15s; }
+.background span:nth-child(4) { left: 65%; width: 70px; height: 70px; animation-duration: 20s; }
+.background span:nth-child(5) { left: 80%; animation-duration: 16s; }
+.background span:nth-child(6) { left: 92%; width: 100px; height: 100px; animation-duration: 25s; }
 
-
-
-.background span:nth-child(1){
-
-left:10%;
-
-animation-duration:13s;
-
+@keyframes bubble {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-130vh) rotate(360deg);
+    opacity: 0;
+  }
 }
-
-
-.background span:nth-child(2){
-
-left:25%;
-
-width:80px;
-height:80px;
-
-animation-duration:18s;
-
-}
-
-
-
-.background span:nth-child(3){
-
-left:45%;
-
-animation-duration:15s;
-
-}
-
-
-
-.background span:nth-child(4){
-
-left:65%;
-
-width:70px;
-height:70px;
-
-animation-duration:20s;
-
-}
-
-
-
-.background span:nth-child(5){
-
-left:80%;
-
-animation-duration:16s;
-
-}
-
-
-
-.background span:nth-child(6){
-
-left:92%;
-
-width:100px;
-height:100px;
-
-animation-duration:25s;
-
-}
-
-
-
-
-@keyframes bubble{
-
-
-0%{
-
-transform:
-
-translateY(0)
-rotate(0);
-
-
-opacity:0;
-
-}
-
-
-20%{
-
-opacity:1;
-
-}
-
-
-100%{
-
-transform:
-
-translateY(-130vh)
-rotate(360deg);
-
-
-opacity:0;
-
-}
-
-
-}
-
-
-
-
-
-
-
-
 
 /* =====================
-       PAGES
+       LOADER PAGE
 ===================== */
+.loader-page {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, var(--main-color), var(--light-color));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  color: white;
+}
 
+.loader-heart {
+  font-size: 70px;
+  animation: heartBeat 1s infinite alternate;
+}
 
+@keyframes heartBeat {
+  to { transform: scale(1.3); }
+}
+
+/* =====================
+        PAGES
+===================== */
 .login-page,
-.home-page{
-
-
-position:absolute;
-
-
-width:100%;
-height:100%;
-
-
-display:flex;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
+.home-page {
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
 }
 
-
-
-.home-page{
-
-display:none;
-
+.home-page {
+  display: none;
 }
-
-
-
-
-
-
-
 
 /* =====================
-      GLASS BOX
+       GLASS DESIGN
 ===================== */
-
-
 .login-box,
-.glass{
-
-
-width:420px;
-
-
-padding:35px;
-
-
-border-radius:35px;
-
-
-
-background:
-
-rgba(255,255,255,.25);
-
-
-
-backdrop-filter:
-
-blur(20px);
-
-
-
-border:
-
-1px solid rgba(255,255,255,.5);
-
-
-
-box-shadow:
-
-0 0 50px rgba(255,20,147,.4);
-
-
-
-text-align:center;
-
-
-transition:.5s;
-
-
+.glass {
+  position: relative;
+  width: 420px;
+  padding: 35px;
+  border-radius: 35px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 50px var(--shadow-color);
+  text-align: center;
+  transition: 0.5s;
 }
-
-
 
 .login-box:hover,
-.glass:hover{
-
-
-transform:translateY(-8px);
-
-
-box-shadow:
-
-0 0 70px hotpink;
-
-
+.glass:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 70px var(--main-color);
 }
 
-
-
-
-
-
+.glass::before,
+.login-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 35px;
+  pointer-events: none;
+  box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.25);
+}
 
 /* =====================
-       LOGIN
+        LOGIN
 ===================== */
-
-
-.login-box h1{
-
-
-color:white;
-
-font-size:40px;
-
-
-margin-bottom:25px;
-
-
-text-shadow:
-
-0 0 20px hotpink;
-
-
-}
-
-
-
-
-
-input{
-
-
-width:100%;
-
-
-padding:15px;
-
-
-margin:10px 0;
-
-
-border:none;
-
-
-outline:none;
-
-
-border-radius:20px;
-
-
-font-size:16px;
-
-
-}
-
-
-
-
-
-input:focus{
-
-
-box-shadow:
-
-0 0 25px pink;
-
-
-}
-
-
-
-
-
-
-
-
-button{
-
-
-width:100%;
-
-
-padding:15px;
-
-
-margin-top:15px;
-
-
-border:none;
-
-
-border-radius:20px;
-
-
-cursor:pointer;
-
-
-font-size:17px;
-
-
-font-weight:bold;
-
-
-color:white;
-
-
-
-background:
-
-linear-gradient(
-90deg,
-#ff69b4,
-#ff1493
-);
-
-
-
-transition:.4s;
-
-
-}
-
-
-
-
-
-button:hover{
-
-
-transform:scale(1.05);
-
-
-box-shadow:
-
-0 0 30px hotpink;
-
-
-}
-/* =========================
-        N LOGO
-========================= */
-
-
-.letter{
-
-
-font-family:'Great Vibes',cursive;
-
-
-font-size:170px;
-
-
-color:white;
-
-
-text-shadow:
-
-
-0 0 15px white,
-
-0 0 35px pink,
-
-0 0 70px hotpink,
-
-0 0 100px deeppink;
-
-
-
-animation:
-
-logoGlow 2s infinite alternate;
-
-
-}
-
-
-
-
-@keyframes logoGlow{
-
-
-from{
-
-transform:scale(1);
-
-}
-
-
-
-to{
-
-transform:scale(1.08);
-
-}
-
-
-}
-
-
-
-
-
-
-.welcome{
-
-
-color:white;
-
-
-font-size:30px;
-
-
-margin-top:-20px;
-
-
-text-shadow:
-
-0 0 20px pink;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       PROFILE
-========================= */
-
-
-.profile-card{
-
-
-margin-top:25px;
-
-
-padding:20px;
-
-
-border-radius:30px;
-
-
-background:
-
-rgba(255,255,255,.20);
-
-
-
-color:white;
-
-
-
-box-shadow:
-
-0 0 35px pink;
-
-
-}
-
-
-
-.profile-card img{
-
-
-width:130px;
-
-
-height:130px;
-
-
-object-fit:cover;
-
-
-border-radius:50%;
-
-
-border:5px solid white;
-
-
-box-shadow:
-
-0 0 40px hotpink;
-
-
-
-}
-
-
-
-.profile-card h2{
-
-
-margin-top:10px;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       CLOCK
-========================= */
-
-
-.clock-box{
-
-
-margin-top:20px;
-
-
-padding:15px;
-
-
-border-radius:25px;
-
-
-
-background:
-
-rgba(255,255,255,.20);
-
-
-
-color:white;
-
-
-
-}
-
-
-
-#clock{
-
-
-font-size:32px;
-
-
-text-shadow:
-
-0 0 20px white;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       GALLERY
-========================= */
-
-
-#gallery{
-
-
-display:flex;
-
-
-flex-wrap:wrap;
-
-
-justify-content:center;
-
-
-gap:15px;
-
-
-margin-top:25px;
-
-
-}
-
-
-
-
-
-.image-box{
-
-
-display:flex;
-
-
-flex-direction:column;
-
-
-align-items:center;
-
-
-}
-
-
-
-
-.gallery-image{
-
-
-width:120px;
-
-
-height:120px;
-
-
-object-fit:cover;
-
-
-border-radius:25px;
-
-
-
-border:4px solid white;
-
-
-
-box-shadow:
-
-
-0 0 30px pink;
-
-
-
-cursor:pointer;
-
-
-transition:.4s;
-
-
-
-}
-
-
-
-.gallery-image:hover{
-
-
-transform:
-
-scale(1.1)
-rotate(5deg);
-
-
-
-}
-
-
-
-
-
-
-
-.delete-btn{
-
-
-width:120px;
-
-
-padding:10px;
-
-
-font-size:13px;
-
-
-background:
-
-linear-gradient(
-90deg,
-#ff416c,
-#ff1493
-);
-
-
-}
-
-
-
-
-
-
-
-
-/* =========================
-       IMAGE VIEWER
-========================= */
-
-
-.image-viewer{
-
-
-position:fixed;
-
-
-top:0;
-
-
-left:0;
-
-
-width:100%;
-
-
-height:100%;
-
-
-
-display:none;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(0,0,0,.85);
-
-
-
-z-index:500;
-
-
-
-}
-
-
-
-.image-viewer img{
-
-
-max-width:90%;
-
-
-max-height:85%;
-
-
-
-border-radius:30px;
-
-
-
-border:5px solid white;
-
-
-
-box-shadow:
-
-0 0 60px hotpink;
-
-
-
-animation:
-
-zoomImage .5s;
-
-
-}
-
-
-
-
-
-@keyframes zoomImage{
-
-
-from{
-
-
-transform:scale(.3);
-
-
-opacity:0;
-
-
-}
-
-
-to{
-
-
-transform:scale(1);
-
-
-opacity:1;
-
-
-}
-
-
-}
-
-
-
-
-
-
-.close-image{
-
-
-position:absolute;
-
-
-right:40px;
-
-
-top:30px;
-
-
-
-color:white;
-
-
-font-size:40px;
-
-
-cursor:pointer;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-        MAGIC WISH
-========================= */
-
-
-.magic-btn{
-
-
-background:
-
-linear-gradient(
-90deg,
-#ffb6e6,
-#ff1493
-);
-
-
-
-animation:
-
-wishPulse 2s infinite;
-
-
-}
-
-
-
-
-
-@keyframes wishPulse{
-
-
-0%{
-
-box-shadow:0 0 0 0 pink;
-
-}
-
-
-70%{
-
-box-shadow:0 0 30px 15px transparent;
-
-}
-
-
-100%{
-
-box-shadow:0 0 0 0 transparent;
-
-}
-
-
-}
-
-
-
-
-
-
-
-.wish-box{
-
-
-position:fixed;
-
-
-top:50%;
-
-
-left:50%;
-
-
-transform:
-
-translate(-50%,-50%)
-scale(0);
-
-
-
-width:320px;
-
-
-padding:30px;
-
-
-border-radius:35px;
-
-
-
-background:
-
-rgba(255,255,255,.25);
-
-
-
-backdrop-filter:
-
-blur(20px);
-
-
-
-color:white;
-
-
-font-size:24px;
-
-
-text-align:center;
-
-
-
-z-index:600;
-
-
-
-box-shadow:
-
-0 0 60px hotpink;
-
-
-
-transition:.5s;
-
-
-}
-
-
-
-
-.wish-box.show{
-
-
-transform:
-
-translate(-50%,-50%)
-scale(1);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-        POPUP
-========================= */
-
-
-.popup{
-
-
-position:fixed;
-
-
-top:0;
-
-
-left:0;
-
-
-width:100%;
-
-
-height:100%;
-
-
-
-display:none;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
-
-background:
-
-rgba(0,0,0,.5);
-
-
-
-z-index:700;
-
-
-}
-
-
-
-
-
-.popup-box{
-
-
-width:350px;
-
-
-padding:35px;
-
-
-border-radius:30px;
-
-
-
-background:
-
-rgba(255,255,255,.25);
-
-
-
-backdrop-filter:
-
-blur(20px);
-
-
-
-color:white;
-
-
-text-align:center;
-
-
-
-box-shadow:
-
-0 0 50px hotpink;
-
-
-}
-/* =========================
-        LOADING
-========================= */
-
-
-.loader-page{
-
-
-position:fixed;
-
-
-width:100%;
-
-
-height:100%;
-
-
-top:0;
-
-
-left:0;
-
-
-
-display:flex;
-
-
-justify-content:center;
-
-
-align-items:center;
-
-
-flex-direction:column;
-
-
-
-background:
-
-linear-gradient(
-135deg,
-#ff80c0,
-#ff1493
-);
-
-
-
-color:white;
-
-
-
-z-index:9999;
-
-
-}
-
-
-
-
-
-.loader-heart{
-
-
-font-size:100px;
-
-
-animation:
-
-loaderHeart 1s infinite alternate;
-
-
-}
-
-
-
-
-
-@keyframes loaderHeart{
-
-
-from{
-
-transform:scale(1);
-
-}
-
-
-to{
-
-transform:scale(1.3);
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-     LOGIN ANIMATION
-========================= */
-
-
-.hide-login{
-
-
-animation:
-
-loginOut 1s forwards;
-
-
-}
-
-
-
-@keyframes loginOut{
-
-
-0%{
-
-
-opacity:1;
-
-
-transform:scale(1);
-
-
-}
-
-
-
-100%{
-
-
-opacity:0;
-
-
-transform:scale(.5);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-.show-home{
-
-
-animation:
-
-homeIn 1s forwards;
-
-
-}
-
-
-
-
-
-@keyframes homeIn{
-
-
-from{
-
-
-opacity:0;
-
-
-transform:
-
-scale(.5)
-translateY(50px);
-
-
-}
-
-
-
-to{
-
-
-opacity:1;
-
-
-transform:
-
-scale(1)
-translateY(0);
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       HEART EFFECT
-========================= */
-
-
-.heart{
-
-
-position:fixed;
-
-
-bottom:-50px;
-
-
-
-font-size:25px;
-
-
-pointer-events:none;
-
-
-
-animation:
-
-heartMove linear forwards;
-
-
-
-z-index:50;
-
-
-}
-
-
-
-
-
-
-@keyframes heartMove{
-
-
-0%{
-
-
-transform:
-
-translateY(0)
-rotate(0);
-
-
-opacity:1;
-
-
-}
-
-
-
-100%{
-
-
-transform:
-
-translateY(-110vh)
-rotate(360deg);
-
-
-opacity:0;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       SAKURA
-========================= */
-
-
-.leaf{
-
-
-position:fixed;
-
-
-top:-50px;
-
-
-
-font-size:30px;
-
-
-
-pointer-events:none;
-
-
-
-animation:
-
-leafFall linear forwards;
-
-
-z-index:40;
-
-
-}
-
-
-
-
-
-@keyframes leafFall{
-
-
-from{
-
-
-transform:
-
-translateY(0)
-rotate(0);
-
-
-}
-
-
-
-to{
-
-
-transform:
-
-translateY(110vh)
-rotate(720deg);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       STAR CURSOR
-========================= */
-
-
-.star{
-
-
-position:absolute;
-
-
-width:10px;
-
-
-height:10px;
-
-
-background:white;
-
-
-border-radius:50%;
-
-
-pointer-events:none;
-
-
-
-box-shadow:
-
-
-0 0 10px white,
-
-0 0 25px pink,
-
-0 0 40px hotpink;
-
-
-
-animation:
-
-starFade 1s forwards;
-
-
-}
-
-
-
-@keyframes starFade{
-
-
-from{
-
-
-transform:scale(1);
-
-
-opacity:1;
-
-
-}
-
-
-
-to{
-
-
-transform:scale(0);
-
-
-opacity:0;
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       MUSIC BUTTON
-========================= */
-
-
-.music-btn{
-
-
-animation:
-
-musicPulse 2s infinite;
-
-
-}
-
-
-
-
-
-@keyframes musicPulse{
-
-
-0%{
-
-
-box-shadow:
-
-0 0 0 0 rgba(255,20,147,.7);
-
-
-}
-
-
-
-70%{
-
-
-box-shadow:
-
-0 0 0 20px rgba(255,20,147,0);
-
-
-}
-
-
-
-100%{
-
-
-box-shadow:
-
-0 0 0 0 rgba(255,20,147,0);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-          DARK MODE
-========================= */
-
-
-.dark{
-
-
-background:
-
-
-linear-gradient(
-
-135deg,
-
-#22001f,
-
-#520044,
-
-#120012
-
-);
-
-
-}
-
-
-
-
-
-
-.dark .glass,
-.dark .login-box{
-
-
-background:
-
-rgba(0,0,0,.45);
-
-
-}
-
-
-
-
-.dark h1,
-.dark h2,
-.dark p{
-
-
-color:white;
-
-
-}
-
-
-
-
-
-
-
-
-.dark-btn{
-
-
-background:
-
-linear-gradient(
-
-90deg,
-
-#8b008b,
-
-#ff1493
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-/* =========================
-       MOBILE DESIGN
-========================= */
-
-
-@media(max-width:600px){
-
-
-
-.login-box,
-.glass{
-
-
-width:90%;
-
-
-padding:25px;
-
-
-}
-
-
-
-
-.letter{
-
-
-font-size:120px;
-
-
-}
-
-
-
-
-.welcome{
-
-
-font-size:24px;
-
-
+.login-box h1 {
+  color: white;
+  font-size: 40px;
+  margin-bottom: 25px;
+  text-shadow: 0 0 20px var(--main-color);
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  box-shadow: 0 0 25px var(--main-color);
+  background: #fff;
+}
+
+/* =====================
+       BUTTONS
+===================== */
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(
+    90deg,
+    var(--main-color),
+    var(--second-color)
+  );
+  transition: 0.4s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px var(--main-color);
+}
+
+.logout-btn {
+  width: auto;
+  padding: 8px 18px;
+  font-size: 14px;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  margin-top: 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* =====================
+        LOGO
+===================== */
+.letter {
+  font-family: 'Great Vibes', cursive;
+  font-size: 140px;
+  color: white;
+  text-shadow: 0 0 15px white, 0 0 35px var(--main-color), 0 0 70px var(--second-color);
+  animation: logoGlow 2s infinite alternate;
+  line-height: 1;
+}
+
+@keyframes logoGlow {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+.welcome {
+  color: white;
+  font-size: 28px;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 20px var(--main-color);
+}
+
+/* =====================
+      PROFILE CARD
+===================== */
+.profile-card {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.profile-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+  box-shadow: 0 0 20px white;
+}
+
+.profile-card h2 {
+  font-size: 22px;
+  margin-top: 5px;
 }
-
-
-
-
-.profile-card img{
-
 
-width:100px;
-
-
-height:100px;
-
-
+.profile-card p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* =====================
+       CLOCK BOX
+===================== */
+.clock-box {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  color: white;
+  box-shadow: inset 0 0 15px rgba(255,255,255,0.2);
 }
-
-
-
-.gallery-image{
-
 
-width:90px;
+#clock {
+  font-size: 32px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px white;
+}
 
-
-height:90px;
-
-
+#date {
+  font-size: 14px;
+  margin-top: 5px;
+  opacity: 0.95;
 }
-
-
-
-.popup-box,
-.wish-box{
-
-
-width:85%;
 
-
+/* =====================
+     GALLERY & UPLOAD
+===================== */
+#imageInput {
+  display: none;
 }
-
-
-
-button{
 
-
-font-size:15px;
-
-
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
 }
-
-
 
+#gallery img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: 0.3s;
+}
+
+#gallery img:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 15px white;
+}
+
+/* =====================
+       VOLUME BOX
+===================== */
+.volume-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.volume-box input[type="range"] {
+  accent-color: var(--second-color);
+  cursor: pointer;
+}
+
+/* =====================
+       COLOR PICKER 🎨
+===================== */
+.color-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 0 30px var(--main-color);
+  color: white;
+}
+
+.color-box p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.color-box button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin: 3px;
+  border-radius: 50%;
+  font-size: 18px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  transition: 0.4s;
+}
+
+.color-box button:hover {
+  transform: scale(1.25) rotate(15deg);
+  box-shadow: 0 0 25px white;
+}
+
+/* =====================
+      SPECIAL BUTTONS
+===================== */
+.music-btn {
+  animation: musicPulse 2s infinite;
+}
+
+@keyframes musicPulse {
+  0% { box-shadow: 0 0 0 0 var(--shadow-color); }
+  70% { box-shadow: 0 0 0 20px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.magic-btn {
+  background: linear-gradient(90deg, #ffd1ec, var(--main-color));
+  animation: wishPulse 2s infinite;
+}
+
+@keyframes wishPulse {
+  0% { box-shadow: 0 0 0 0 var(--shadow-color); }
+  70% { box-shadow: 0 0 30px 15px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+/* =====================
+       MAGIC WISH BOX
+===================== */
+.wish-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 320px;
+  padding: 30px;
+  border-radius: 35px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 600;
+  box-shadow: 0 0 60px var(--main-color);
+  transition: 0.5s;
+}
+
+.wish-box.show {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* =====================
+     POPUP MESSAGE 💌
+===================== */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-box {
+  width: 320px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 50px var(--main-color);
+}
+
+.popup-box h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.popup-box p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+/* =====================
+     IMAGE VIEWER 🔍
+===================== */
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.image-viewer img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 20px;
+  box-shadow: 0 0 30px white;
+}
+
+.close-image {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  font-size: 35px;
+  color: white;
+  cursor: pointer;
+}
+
+/* =====================
+       EFFECTS (🌸/✨)
+===================== */
+.flower {
+  position: fixed;
+  top: -50px;
+  font-size: 30px;
+  pointer-events: none;
+  animation: flowerFall linear forwards;
+  z-index: 20;
+}
+
+@keyframes flowerFall {
+  from { transform: translateY(0) rotate(0); opacity: 1; }
+  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.star {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 10px white, 0 0 25px var(--main-color), 0 0 40px var(--second-color);
+  animation: starFade 1s forwards;
+  z-index: 999;
+}
+
+@keyframes starFade {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(0); opacity: 0; }
+}
+
+/* =====================
+       SMALL DEVICES
+===================== */
+@media (max-width: 440px) {
+  .login-box,
+  .glass {
+    width: 92%;
+    padding: 25px 20px;
+  }
+
+  .letter { font-size: 100px; }
+  .welcome { font-size: 22px; }
+  .color-box button { width: 35px; height: 35px; font-size: 16px; }
 }

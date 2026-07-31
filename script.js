@@ -1,776 +1,186 @@
-// =================================
-// 💖 N PROJECT SCRIPT
-// =================================
-
-
-// ===============================
-// LOGIN
-// ===============================
-
-
-const LOGIN = "admin";
-const PASSWORD = "12345";
-
-
-
-function login(){
-
-
-const user =
-document.getElementById("username").value;
-
-
-const pass =
-document.getElementById("password").value;
-
-
-
-if(user === LOGIN && pass === PASSWORD){
-
-
-
-const loginPage =
-document.getElementById("loginPage");
-
-
-const homePage =
-document.getElementById("homePage");
-
-
-
-loginPage.classList.add("hide-login");
-
-
-
-setTimeout(()=>{
-
-
-loginPage.style.display="none";
-
-
-homePage.style.display="flex";
-
-
-homePage.classList.add("show-home");
-
-
-
-startClock();
-
-
-loadImages();
-
-
-
-},1000);
-
-
-
-}
-
-else{
-
-
-document.getElementById("error").innerHTML=
-
-"❌ Login yoki parol xato!";
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-// ===============================
-// LOGOUT
-// ===============================
-
-
-function logout(){
-
-
-document.getElementById("homePage")
-.style.display="none";
-
-
-document.getElementById("loginPage")
-.style.display="flex";
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// CLOCK
-// ===============================
-
-
-function startClock(){
-
-
-setInterval(()=>{
-
-
-let now = new Date();
-
-
-
-document.getElementById("clock")
-.innerHTML =
-now.toLocaleTimeString();
-
-
-
-document.getElementById("date")
-.innerHTML =
-now.toLocaleDateString();
-
-
-
-},1000);
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// IMAGE SYSTEM
-// ===============================
-
-
-const imageInput =
-document.getElementById("imageInput");
-
-
-const gallery =
-document.getElementById("gallery");
-
-
-
-
-
-if(imageInput){
-
-
-
-imageInput.addEventListener("change",()=>{
-
-
-
-let files=imageInput.files;
-
-
-
-let images =
-JSON.parse(localStorage.getItem("images"))
-|| [];
-
-
-
-
-
-Array.from(files).forEach(file=>{
-
-
-let reader=new FileReader();
-
-
-
-reader.onload=function(e){
-
-
-
-images.push(e.target.result);
-
-
-
-localStorage.setItem(
-"images",
-JSON.stringify(images)
-);
-
-
-
-loadImages();
-
-
-
-};
-
-
-
-reader.readAsDataURL(file);
-
-
-
+/* ==================================
+       💖 N PROJECT SCRIPT JS
+================================== */
+
+// DOM elementlarini bir marta ushlab olamiz
+const loader = document.getElementById('loader');
+const loginPage = document.getElementById('loginPage');
+const homePage = document.getElementById('homePage');
+const errorMsg = document.getElementById('error');
+
+// 1. SAHIFA YUKLANISHI (LOADING EFFECT)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (loader) loader.style.display = 'none';
+  }, 1500); // 1.5 soniyadan so'ng loader yo'qoladi
 });
 
+// 2. LOGIN / LOGOUT FUNKSIYALARI
+function login() {
+  const usernameInput = document.getElementById('username').value.trim();
+  const passwordInput = document.getElementById('password').value.trim();
 
-
-});
-
-
-
+  // Login uchun namuna (xohlasangiz o'zgartirishingiz mumkin)
+  if (usernameInput.toLowerCase() === 'n' && passwordInput === '1234') {
+    loginPage.style.display = 'none';
+    homePage.style.display = 'flex';
+    if (errorMsg) errorMsg.innerText = '';
+  } else {
+    if (errorMsg) {
+      errorMsg.style.color = '#fff';
+      errorMsg.style.marginTop = '10px';
+      errorMsg.innerText = '⚠️ Login yoki parol noto‘g‘ri!';
+    }
+  }
 }
 
-
-
-
-
-
-
-
-
-
-function loadImages(){
-
-
-
-if(!gallery)return;
-
-
-
-gallery.innerHTML="";
-
-
-
-let images =
-JSON.parse(localStorage.getItem("images"))
-|| [];
-
-
-
-
-images.forEach((src,index)=>{
-
-
-
-let box =
-document.createElement("div");
-
-
-box.className="image-box";
-
-
-
-let img =
-document.createElement("img");
-
-
-
-img.src=src;
-
-
-img.className="gallery-image";
-
-
-
-img.onclick=function(){
-
-
-openImage(src);
-
-
-};
-
-
-
-
-
-let del =
-document.createElement("button");
-
-
-
-del.innerHTML="🗑️ Delete";
-
-
-del.className="delete-btn";
-
-
-
-del.onclick=function(){
-
-
-deleteImage(index);
-
-
-};
-
-
-
-
-box.appendChild(img);
-
-
-box.appendChild(del);
-
-
-
-gallery.appendChild(box);
-
-
-
-});
-
-
-
+function logout() {
+  homePage.style.display = 'none';
+  loginPage.style.display = 'flex';
+  document.getElementById('username').value = '';
+  document.getElementById('password').value = '';
 }
 
+// 3. SOAT VA SANA (REAL-TIME CLOCK)
+function updateClock() {
+  const now = new Date();
+  
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+  const clockElem = document.getElementById('clock');
+  const dateElem = document.getElementById('date');
+  
+  if (clockElem) clockElem.innerText = `${hours}:${minutes}:${seconds}`;
+  
+  if (dateElem) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    dateElem.innerText = now.toLocaleDateString('uz-UZ', options);
+  }
+}
+setInterval(updateClock, 1000);
+updateClock();
 
+// 4. GALEREYA VA RASM YUKLASH (IMAGE UPLOAD & VIEWER)
+const imageInput = document.getElementById('imageInput');
+const gallery = document.getElementById('gallery');
+const imageViewer = document.getElementById('imageViewer');
+const bigImage = document.getElementById('bigImage');
 
-
-
-
-
-
-
-function deleteImage(index){
-
-
-
-let images =
-JSON.parse(localStorage.getItem("images"))
-|| [];
-
-
-
-images.splice(index,1);
-
-
-
-localStorage.setItem(
-"images",
-JSON.stringify(images)
-);
-
-
-
-loadImages();
-
-
-
+if (imageInput) {
+  imageInput.addEventListener('change', function (e) {
+    const files = e.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = document.createElement('img');
+        img.src = event.target.result;
+        img.onclick = () => openImage(event.target.result);
+        if (gallery) gallery.appendChild(img);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  });
 }
 
-
-
-
-
-
-
-
-
-
-// ===============================
-// IMAGE VIEWER
-// ===============================
-
-
-function openImage(src){
-
-
-let viewer =
-document.getElementById("imageViewer");
-
-
-let big =
-document.getElementById("bigImage");
-
-
-
-big.src=src;
-
-
-
-viewer.style.display="flex";
-
-
+function openImage(src) {
+  if (imageViewer && bigImage) {
+    bigImage.src = src;
+    imageViewer.style.display = 'flex';
+  }
 }
 
-
-
-
-
-
-function closeImage(){
-
-
-document.getElementById("imageViewer")
-.style.display="none";
-
-
+function closeImage() {
+  if (imageViewer) imageViewer.style.display = 'none';
 }
 
-
-
-
-
-
-
-
-
-
-// ===============================
-// MUSIC
-// ===============================
-
-
-const music =
-document.getElementById("music");
-
-
-
-let playing=false;
-
-
-
-
-function toggleMusic(){
-
-
-
-if(!playing){
-
-
-
-music.play()
-
-.then(()=>{
-
-
-
-playing=true;
-
-
-
-document.querySelector(".music-btn")
-.innerHTML="⏸ Stop Music";
-
-
-
-})
-
-.catch(()=>{
-
-
-alert(
-"music.mp3 topilmadi"
-);
-
-
-});
-
-
-
-
+// 5. MAXFIY XABAR (POPUP MESSAGE)
+function showMessage() {
+  const popup = document.getElementById('popup');
+  if (popup) popup.style.display = 'flex';
 }
 
-else{
-
-
-music.pause();
-
-
-playing=false;
-
-
-
-document.querySelector(".music-btn")
-.innerHTML="🎵 Music";
-
-
+function closePopup() {
+  const popup = document.getElementById('popup');
+  if (popup) popup.style.display = 'none';
 }
 
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// VOLUME
-// ===============================
-
-
-
-const volume =
-document.getElementById("volume");
-
-
-
-if(volume){
-
-
-
-volume.addEventListener("input",()=>{
-
-
-music.volume =
-volume.value;
-
-
-
-});
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// SECRET MESSAGE
-// ===============================
-
-
-
-function showMessage(){
-
-
-document.getElementById("popup")
-.style.display="flex";
-
-
-}
-
-
-
-function closePopup(){
-
-
-document.getElementById("popup")
-.style.display="none";
-
-
-}
-
-
-
-
-
-
-
-
-
-// ===============================
-// ✨ MAGIC WISH
-// ===============================
-
-
-
-const wishes=[
-
-
-"💖 Har kuning baxtli o'tsin 🌸",
-
-"✨ Orzularing amalga oshsin 💕",
-
-"🌹 Tabassuming doimo chiroyli bo'lsin",
-
-"🦋 Hayoting ranglarga boy bo'lsin",
-
-"💎 Sen juda qadrlisan 💖"
-
-
+// 6. SEHRLI TILAKLAR (MAGIC WISH)
+const wishes = [
+  "Har doim tabassum qilib yur! 😊",
+  "Bugungi kuning ajoyib o'tsin! 🌸",
+  "Sen juda ham ajoyib insonsan! 💖",
+  "Barcha orzularing ushalsin! ✨",
+  "O'zingga bo'lgan ishonching hech qachon so'nmasin! 🌟",
+  "Har bir kun senga quvonch olib kelsin! 🎈"
 ];
 
-
-
-
-
-
-function makeWish(){
-
-
-
-let box =
-document.getElementById("wishBox");
-
-
-
-let text =
-wishes[
-Math.floor(Math.random()*wishes.length)
-];
-
-
-
-box.innerHTML=text;
-
-
-
-box.classList.add("show");
-
-
-
-createWishHearts();
-
-
-
-setTimeout(()=>{
-
-
-box.classList.remove("show");
-
-
-},3000);
-
-
-
+function makeWish() {
+  const wishBox = document.getElementById('wishBox');
+  if (wishBox) {
+    const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+    wishBox.innerText = randomWish;
+    wishBox.classList.add('show');
+    
+    setTimeout(() => {
+      wishBox.classList.remove('show');
+    }, 4000); // 4 soniyadan so'ng yopiladi
+  }
 }
 
+// 7. MUSIQA VA OVOZ BO'YICHA BOSHQARUV (MUSIC CONTROL)
+const music = document.getElementById('music');
+const volumeSlider = document.getElementById('volume');
 
-
-
-
-
-
-function createWishHearts(){
-
-
-
-for(let i=0;i<15;i++){
-
-
-
-let heart =
-document.createElement("div");
-
-
-
-heart.innerHTML="💗";
-
-
-heart.className="heart";
-
-
-
-heart.style.left =
-Math.random()*100+"vw";
-
-
-
-heart.style.bottom="0";
-
-
-
-document.body.appendChild(heart);
-
-
-
-setTimeout(()=>{
-
-
-heart.remove();
-
-
-},3000);
-
-
-
+function toggleMusic() {
+  if (music) {
+    if (music.paused) {
+      music.play();
+    } else {
+      music.pause();
+    }
+  }
 }
 
-
-
+if (volumeSlider && music) {
+  volumeSlider.addEventListener('input', (e) => {
+    music.volume = e.target.value;
+  });
 }
 
-
-
-
-
-
-
-
-
-
-// ===============================
-// LOADING
-// ===============================
-
-
-window.addEventListener("load",()=>{
-
-
-setTimeout(()=>{
-
-
-let loader =
-document.getElementById("loader");
-
-
-
-if(loader){
-
-
-loader.style.display="none";
-
-
+// 8. TEMATIK RANG TANLASH (COLOR PICKER)
+function changeColor(color) {
+  document.documentElement.style.setProperty('--main-color', color);
+  
+  // Asosiy va ikkinchi darajali ranglarni avtomatik uyg'unlashtirish
+  if (color === '#3498db') {
+    document.documentElement.style.setProperty('--second-color', '#2980b9');
+    document.documentElement.style.setProperty('--shadow-color', 'rgba(52, 152, 219, 0.45)');
+  } else if (color === '#9b59b6') {
+    document.documentElement.style.setProperty('--second-color', '#8e44ad');
+    document.documentElement.style.setProperty('--shadow-color', 'rgba(155, 89, 182, 0.45)');
+  } else if (color === '#2ecc71') {
+    document.documentElement.style.setProperty('--second-color', '#27ae60');
+    document.documentElement.style.setProperty('--shadow-color', 'rgba(46, 204, 113, 0.45)');
+  } else if (color === '#f1c40f') {
+    document.documentElement.style.setProperty('--second-color', '#f39c12');
+    document.documentElement.style.setProperty('--shadow-color', 'rgba(241, 196, 15, 0.45)');
+  } else {
+    document.documentElement.style.setProperty('--second-color', '#ff1493');
+    document.documentElement.style.setProperty('--shadow-color', 'rgba(255, 20, 147, 0.45)');
+  }
 }
 
-
-
-},2000);
-
-
-
-});
-
-
-
-
-
-
-
-
-
-// ===============================
-// ENTER LOGIN
-// ===============================
-
-
-
-document.addEventListener("keydown",(e)=>{
-
-
-if(e.key==="Enter"){
-
-
-login();
-
-
+// 9. DARK MODE TOGGLE
+let isDark = false;
+function darkMode() {
+  isDark = !isDark;
+  if (isDark) {
+    document.body.style.background = 'linear-gradient(135deg, #121212, #2c3e50, #000)';
+    document.documentElement.style.setProperty('--main-color', '#ff1493');
+  } else {
+    document.body.style.background = 'linear-gradient(135deg, var(--main-color), var(--light-color), #fff)';
+    document.body.style.backgroundSize = '400% 400%';
+  }
 }
-
-
-});
