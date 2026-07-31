@@ -3,27 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>N Project</title>
+  <title>N ✨ Romantic World</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- LOADER -->
   <div id="loader" class="loader-wrapper">
     <div class="heart-loader">💖</div>
+    <p class="loader-text">Sevgimiz olami yuklanmoqda...</p>
   </div>
 
   <!-- DARK MODE BUTTON -->
-  <button class="dark-btn" onclick="darkMode()">🌙 Dark Mode</button>
+  <button class="dark-btn" onclick="darkMode()">🌙 Night Mood</button>
 
   <!-- LOGIN PAGE -->
   <div id="loginPage" class="login-container">
     <div class="glass login-box">
-      <h1 class="letter">N</h1>
-      <h2>Xush Kelibsiz ✨</h2>
-      <input type="text" id="username" placeholder="Login (N)">
-      <input type="password" id="password" placeholder="Parol (1234)">
-      <button onclick="login()" class="btn">Kirish</button>
+      <h1 class="letter pulse-heart">N</h1>
+      <h2 class="romantic-title">Xush Kelibsan, Yagonam ✨</h2>
+      <p class="sub-text">Sirli olamimizga kirish uchun parolingni kirit...</p>
+      
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Ismingiz (N)">
+        <input type="password" id="password" placeholder="Maxfiy parol (1234)">
+      </div>
+      
+      <button onclick="login()" class="btn login-btn">Yurakni Ochish 💖</button>
       <p id="errorMsg" class="error"></p>
     </div>
   </div>
@@ -31,17 +38,19 @@
   <!-- HOME PAGE -->
   <div id="homePage" class="home-container" style="display: none;">
     <div class="glass home-card">
-      <h1 class="main-title">N Project 💖</h1>
+      <h1 class="main-title sparkle-text">N Project 💖</h1>
+      <p class="love-subtitle">"Har bir soniya sen bilan go'zal..."</p>
       
-      <!-- SOAT BLOKI -->
+      <!-- REAL-TIME CLOCK -->
       <div class="glass clock-box">
+        <div class="clock-icon">⏰</div>
         <h3 id="clock">00:00:00</h3>
         <p id="date">01-yanvar, 2026</p>
       </div>
 
       <!-- ⏳ COUNTDOWN TIMER -->
       <div class="glass countdown-box">
-        <h3>⏳ Maxsus sanagacha:</h3>
+        <h3>⏳ Bizning Maxsus Sanamizgacha:</h3>
         <div class="timer-display">
           <div class="time-card"><span id="days">00</span><small>Kun</small></div>
           <div class="time-card"><span id="hours">00</span><small>Soat</small></div>
@@ -50,31 +59,34 @@
         </div>
       </div>
 
-      <!-- 💌 RANDOM NOTES -->
+      <!-- 💌 RANDOM LOVE NOTES -->
       <div class="glass note-box">
-        <h3>💌 Maxsus Xabar</h3>
-        <p id="noteText">Tugmani bosing va yurakdan chiqqan so‘zlarni o‘qing... ✨</p>
-        <button onclick="generateNote()" class="btn note-btn">✨ Yangi xat o‘qish</button>
+        <h3>💌 Senga Atalgan Yurak So'zlari</h3>
+        <p id="noteText">Tugmani bos va senga atalgan shirin so'zlarni o'q... ✨</p>
+        <button onclick="generateNote()" class="btn note-btn">✨ Yangi Xatni Ochish 💖</button>
       </div>
 
-      <!-- GALEREYA -->
-      <div class="gallery-title">📸 Galereya</div>
-      <div class="gallery">
-        <div class="img-card"><img src="https://picsum.photos/300/300?random=1" alt="Image 1"></div>
-        <div class="img-card"><img src="https://picsum.photos/300/300?random=2" alt="Image 2"></div>
-        <div class="img-card"><img src="https://picsum.photos/300/300?random=3" alt="Image 3"></div>
+      <!-- 📸 ROMANTIC GALLERY -->
+      <div class="gallery-section">
+        <h3 class="gallery-title">📸 Bizning Eng Chiroyli Xotiralarimiz</h3>
+        <div class="gallery">
+          <!-- O'zingizning rasmlaringizni images/1.jpg qilib joylashtirishingiz mumkin -->
+          <div class="img-card"><img src="https://picsum.photos/400/400?random=1" alt="Bizning xotira 1"></div>
+          <div class="img-card"><img src="https://picsum.photos/400/400?random=2" alt="Bizning xotira 2"></div>
+          <div class="img-card"><img src="https://picsum.photos/400/400?random=3" alt="Bizning xotira 3"></div>
+        </div>
       </div>
 
-      <!-- MUSIQA PLEYERI -->
+      <!-- 🎵 MUSIC PLAYER -->
       <div class="glass audio-box">
-        <p>🎵 Fon Musiqasi</p>
+        <p class="music-title">🎵 Fon Musiqasi</p>
+        <!-- O'zingizning musiqangizni music/song.mp3 deb qo'shishingiz mumkin -->
         <audio id="bgMusic" controls loop>
           <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-          Brauzeringiz audio elementni qo'llab-quvvatlamaydi.
         </audio>
       </div>
 
-      <button onclick="logout()" class="btn logout-btn">Chiqish</button>
+      <button onclick="logout()" class="btn logout-btn">Chiqish 💖</button>
     </div>
   </div>
 

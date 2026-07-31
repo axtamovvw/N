@@ -6,8 +6,8 @@ window.addEventListener("load", () => {
   if (loader) {
     setTimeout(() => {
       loader.style.opacity = "0";
-      setTimeout(() => loader.style.display = "none", 500);
-    }, 800);
+      setTimeout(() => loader.style.display = "none", 600);
+    }, 1000);
   }
   updateClock();
   updateCountdown();
@@ -29,7 +29,7 @@ function login() {
     if (errorMsg) errorMsg.innerText = '';
   } else {
     if (errorMsg) {
-      errorMsg.innerText = '⚠️ Login yoki parol noto‘g‘ri!';
+      errorMsg.innerText = '⚠️ Yagonam, login yoki parol noto‘g‘ri!';
     }
   }
 }
@@ -42,7 +42,7 @@ function logout() {
 }
 
 // ==================================
-// 3. REAL TIME CLOCK
+// 3. REAL-TIME CLOCK
 // ==================================
 function updateClock() {
   const now = new Date();
@@ -60,15 +60,16 @@ function updateClock() {
 setInterval(updateClock, 1000);
 
 // ==================================
-// 4. RANDOM LOVE NOTES LOGIC
+// 4. ROMANTIC LOVE NOTES
 // ==================================
 const notes = [
-  "Har bir kuning tabassum va quvonchga to‘la bo‘lsin! 🌸",
-  "Sening borliging — dunyodagi eng go‘zal mo‘jizalardan biri. ✨",
-  "Har doim o‘z orzularing sari ishonch bilan qadam tashla! 💖",
-  "Yulduzlar qanchalik porlamasin, sening tabassuming baribir hammalaridan yorqinroq. 🌟",
-  "Bugungi kuning kechagidan ham hayratarli va omadli o‘tsin! 🍀",
-  "Sen o‘ylaganingdan ham kuchliroq va qobiliyatliroqsan! 💖"
+  "Sening tabassuming — mening har bir kunimning eng go'zal quyoshi... 🌸",
+  "Dunyoda qancha yulduz bo'lsa ham, mening osmonimda faqat sen porlaysan. ✨",
+  "Har bir urayotgan yurak urishim senga atalgan, yagonam... 💖",
+  "Sen bilan o'tgan har bir soniya — hayotimning eng qadrli tuhfasi. 🌟",
+  "Bugun ham, ertaga ham, har doim seni jonimdan ortiq sevaman... 🍀",
+  "Sening borliging uchun Xudoga har kuni tashakkur aytaman. 💖",
+  "Kuyib ketgudek sevaman seni, mening erkatoyim! ✨"
 ];
 
 function generateNote() {
@@ -80,12 +81,13 @@ function generateNote() {
     const randomIndex = Math.floor(Math.random() * notes.length);
     noteText.innerText = notes[randomIndex];
     noteText.style.opacity = "1";
-  }, 300);
+  }, 350);
 }
 
 // ==================================
 // 5. COUNTDOWN TIMER LOGIC
 // ==================================
+// Maxsus kunizni shu yerga kiritishingiz mumkin: (Yil, Oy-1, Kun)
 const targetDate = new Date(2026, 11, 31, 0, 0, 0).getTime();
 
 function updateCountdown() {

@@ -1,6 +1,4 @@
-// ===============================
-// 💗 FLOATING HEARTS
-// ===============================
+// FLOATING HEARTS
 function createHeart() {
   let heart = document.createElement("div");
   heart.className = "heart";
@@ -10,15 +8,11 @@ function createHeart() {
   heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
   document.body.appendChild(heart);
 
-  setTimeout(() => {
-    heart.remove();
-  }, 8000);
+  setTimeout(() => { heart.remove(); }, 8000);
 }
-setInterval(createHeart, 900);
+setInterval(createHeart, 800);
 
-// ===============================
-// 🌸 SAKURA FALL
-// ===============================
+// SAKURA FALL
 function createSakura() {
   let leaf = document.createElement("div");
   leaf.className = "leaf";
@@ -28,15 +22,11 @@ function createSakura() {
   leaf.style.animationDuration = (Math.random() * 5 + 5) + "s";
   document.body.appendChild(leaf);
 
-  setTimeout(() => {
-    leaf.remove();
-  }, 12000);
+  setTimeout(() => { leaf.remove(); }, 12000);
 }
-setInterval(createSakura, 1200);
+setInterval(createSakura, 1100);
 
-// ===============================
-// ✨ MOUSE STAR TRAIL
-// ===============================
+// MOUSE STAR TRAIL
 document.addEventListener("mousemove", (e) => {
   let star = document.createElement("div");
   star.className = "star";
@@ -44,14 +34,10 @@ document.addEventListener("mousemove", (e) => {
   star.style.top = e.pageY + "px";
   document.body.appendChild(star);
 
-  setTimeout(() => {
-    star.remove();
-  }, 800);
+  setTimeout(() => { star.remove(); }, 800);
 });
 
-// ===============================
-// 💫 RANDOM N SCALE ANIMATION
-// ===============================
+// RANDOM N SCALE
 setInterval(() => {
   let n = document.querySelector(".letter");
   if (n) {
