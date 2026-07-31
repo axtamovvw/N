@@ -129,7 +129,7 @@ body {
 .login-box, .home-card {
   padding: 40px 30px;
   width: 100%;
-  max-width: 500px;
+  max-width: 520px;
   text-align: center;
 }
 
@@ -162,18 +162,29 @@ body {
   position: relative;
   width: 120px;
   height: 120px;
-  margin: 0 auto 15px;
+  margin: 0 auto 10px;
   border-radius: 50%;
   overflow: hidden;
   border: 3px solid rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 20px rgba(255, 117, 140, 0.3);
   cursor: pointer;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-avatar-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.profile-placeholder {
+  font-size: 0.8rem;
+  color: var(--main-color);
+  padding: 10px;
+  font-weight: 500;
 }
 
 .avatar-overlay {
@@ -191,6 +202,17 @@ body {
 
 .profile-avatar-container:hover .avatar-overlay {
   opacity: 1;
+}
+
+.btn-delete-prof {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  margin-bottom: 15px;
 }
 
 /* INPUT & BUTTONS */
@@ -235,6 +257,11 @@ textarea {
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 117, 140, 0.6);
+}
+
+.upload-new-btn {
+  margin-bottom: 20px;
+  margin-top: 5px;
 }
 
 .error {
@@ -288,7 +315,7 @@ textarea {
   opacity: 0.8;
 }
 
-/* GALEREYA */
+/* GALEREYA (DINAMIK & O'CHIRISH BILAN) */
 .gallery-section {
   margin: 25px 0;
 }
@@ -301,8 +328,8 @@ textarea {
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
 .img-card {
@@ -312,12 +339,12 @@ textarea {
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   border: 2px solid rgba(255, 255, 255, 0.8);
   cursor: pointer;
-  height: 110px;
+  height: 140px;
   transition: transform 0.3s ease;
 }
 
 .img-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .img-card img {
@@ -326,19 +353,66 @@ textarea {
   object-fit: cover;
 }
 
-.upload-badge {
+.delete-badge {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
-  background: rgba(0,0,0,0.5);
+  top: 8px;
+  right: 8px;
+  background: rgba(235, 59, 90, 0.85);
   color: white;
-  font-size: 0.65rem;
-  padding: 3px 6px;
-  border-radius: 8px;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 10px;
   backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
 }
 
-/* LIGHTBOX MODAL (RASMNI ASL HOLICHA KO'RISH) */
+.delete-badge:hover {
+  background: rgba(235, 59, 90, 1);
+}
+
+/* BILLIE EILISH PLAYLIST */
+.playlist-label {
+  font-size: 0.85rem;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.playlist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.track-btn {
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.4);
+  border-radius: 12px;
+  text-align: left;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.track-btn:hover {
+  background: rgba(255,255,255,0.7);
+  color: var(--main-color);
+}
+
+.track-btn.active {
+  background: var(--main-color);
+  color: white;
+  font-weight: 600;
+  border-color: transparent;
+}
+
+/* LIGHTBOX MODAL */
 .lightbox-modal {
   display: none;
   position: fixed;
@@ -402,13 +476,6 @@ textarea {
   font-weight: 600;
 }
 
-/* AUDIO PLAYER */
-.audio-box audio {
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 25px;
-}
-
 /* DARK MODE */
 body.dark {
   background: linear-gradient(-45deg, #120a17, #26112d, #1a0826, #0d0214) !important;
@@ -420,7 +487,7 @@ body.dark .glass {
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
-body.dark input, body.dark textarea {
+body.dark input, body.dark textarea, body.dark .track-btn {
   background: rgba(255, 255, 255, 0.1) !important;
   color: #fff !important;
 }

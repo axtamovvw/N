@@ -1,18 +1,28 @@
-let currentGalleryIndex = 0;
-let galleryCaptions = ["", "", ""];
+let galleryItems = []; // { id, src, caption }
+let activeGalleryId = null;
 
-// 1. INITIALIZATION & LOADER (Kafolatlangan yopilish)
+// BILLIE EILISH TOP 10 PLAYLIST AUDIOS
+const billieTracks = [
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/OceanEyes.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/BadGuy.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/Lovely.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/WhenThePartysOver.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/EverythingIWanted.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/HappierThanEver.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/WhatWasIMadeFor.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/BuryAFriend.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/YouShouldSeeMeInACrown.mp3",
+  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/TV.mp3"
+];
+
+// 1. INITIALIZATION & LOADER
 function hideLoader() {
   const loader = document.getElementById("loader");
   if (loader && loader.style.display !== "none") {
     loader.style.opacity = "0";
-    setTimeout(() => {
-      loader.style.display = "none";
-    }, 500);
+    setTimeout(() => { loader.style.display = "none"; }, 500);
   }
 }
-
-// Har qanday holatda 1 soniyadan so'ng loaderni majburiy yopadi
 setTimeout(hideLoader, 1000);
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -33,17 +43,13 @@ function login() {
   const usernameInput = document.getElementById('username').value.trim();
   const passwordInput = document.getElementById('password').value.trim();
   const errorMsg = document.getElementById('errorMsg');
-  const loginPage = document.getElementById('loginPage');
-  const homePage = document.getElementById('homePage');
 
   if (usernameInput.toLowerCase() === 'n' && passwordInput === '1234') {
-    loginPage.style.display = 'none';
-    homePage.style.display = 'flex';
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('homePage').style.display = 'flex';
     if (errorMsg) errorMsg.innerText = '';
   } else {
-    if (errorMsg) {
-      errorMsg.innerText = '⚠️ Ma\'lumotlar noto‘g‘ri kiritildi!';
-    }
+    if (errorMsg) errorMsg.innerText = '⚠️ Ma\'lumotlar noto‘g‘ri kiritildi!';
   }
 }
 
@@ -74,7 +80,6 @@ const targetDate = new Date(2026, 11, 31, 0, 0, 0).getTime();
 function updateCountdown() {
   const now = new Date().getTime();
   const difference = targetDate - now;
-
   if (difference < 0) return;
 
   const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -94,10 +99,7 @@ setInterval(updateCountdown, 1000);
 // 5. 24 SOATLIK DAILY NOTE
 function saveDailyNote() {
   const noteVal = document.getElementById("dailyNoteInput").value;
-  const noteData = {
-    text: noteVal,
-    timestamp: new Date().getTime()
-  };
+  const noteData = { text: noteVal, timestamp: new Date().getTime() };
   localStorage.setItem("userDailyNote", JSON.stringify(noteData));
   
   const status = document.getElementById("noteStatus");
@@ -112,20 +114,16 @@ function checkDailyNote() {
   if (saved) {
     const parsed = JSON.parse(saved);
     const now = new Date().getTime();
-    const twentyFourHours = 24 * 60 * 60 * 1000;
-
-    if (now - parsed.timestamp < twentyFourHours) {
+    if (now - parsed.timestamp < 24 * 60 * 60 * 1000) {
       const noteInput = document.getElementById("dailyNoteInput");
       if(noteInput) noteInput.value = parsed.text;
     } else {
       localStorage.removeItem("userDailyNote");
-      const noteInput = document.getElementById("dailyNoteInput");
-      if(noteInput) noteInput.value = "";
     }
   }
 }
 
-// 6. PROFIL VA GALEREYA RASMLARI
+// 6. PROFIL RASMI VA O'CHIRISH
 function triggerProfileUpload() {
   document.getElementById("profileUpload").click();
 }
@@ -133,42 +131,96 @@ function triggerProfileUpload() {
 function loadProfileImage(event) {
   const reader = new FileReader();
   reader.onload = function() {
-    document.getElementById("profileImage").src = reader.result;
+    const imgEl = document.getElementById("profileImage");
+    const placeholder = document.getElementById("profilePlaceholder");
+    const removeBtn = document.getElementById("profileRemoveBtn");
+
+    imgEl.src = reader.result;
+    imgEl.style.display = "block";
+    placeholder.style.display = "none";
+    removeBtn.style.display = "block";
+
     localStorage.setItem("savedProfileImg", reader.result);
   };
   if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
 }
 
-let targetGalleryIndexToUpload = 0;
-function triggerGalleryUpload(index) {
-  targetGalleryIndexToUpload = index;
+function removeProfileImage() {
+  const imgEl = document.getElementById("profileImage");
+  const placeholder = document.getElementById("profilePlaceholder");
+  const removeBtn = document.getElementById("profileRemoveBtn");
+
+  imgEl.src = "";
+  imgEl.style.display = "none";
+  placeholder.style.display = "block";
+  removeBtn.style.display = "none";
+
+  localStorage.removeItem("savedProfileImg");
+}
+
+// 7. CHEKSIZ GALEREYA VA O'CHIRISH
+function triggerGalleryUpload() {
   document.getElementById("galleryUpload").click();
 }
 
 function loadGalleryImage(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
   const reader = new FileReader();
   reader.onload = function() {
-    document.getElementById(`galImg${targetGalleryIndexToUpload}`).src = reader.result;
-    localStorage.setItem(`savedGalImg_${targetGalleryIndexToUpload}`, reader.result);
+    const newItem = {
+      id: Date.now(),
+      src: reader.result,
+      caption: ""
+    };
+    galleryItems.push(newItem);
+    saveGalleryToStorage();
+    renderGallery();
   };
-  if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+  reader.readAsDataURL(file);
 }
 
-// 7. LIGHTBOX (RASMNI ASL HOLICHA KO'RISH)
-function openLightbox(index) {
-  currentGalleryIndex = index;
-  const imgEl = document.getElementById(`galImg${index}`);
-  if(imgEl) {
-    document.getElementById("lightboxImg").src = imgEl.src;
-    document.getElementById("lightboxCaptionInput").value = galleryCaptions[index] || "";
+function renderGallery() {
+  const container = document.getElementById("galleryContainer");
+  container.innerHTML = "";
+
+  galleryItems.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "img-card";
+    card.onclick = () => openLightbox(item.id);
+
+    card.innerHTML = `
+      <img src="${item.src}" alt="Gallery Image">
+      <span class="delete-badge" onclick="event.stopPropagation(); removeGalleryImage(${item.id})">🗑️ O'chirish</span>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function removeGalleryImage(id) {
+  galleryItems = galleryItems.filter(item => item.id !== id);
+  saveGalleryToStorage();
+  renderGallery();
+}
+
+function saveGalleryToStorage() {
+  localStorage.setItem("savedGalleryItems", JSON.stringify(galleryItems));
+}
+
+// 8. LIGHTBOX
+function openLightbox(id) {
+  activeGalleryId = id;
+  const item = galleryItems.find(i => i.id === id);
+  if(item) {
+    document.getElementById("lightboxImg").src = item.src;
+    document.getElementById("lightboxCaptionInput").value = item.caption || "";
     document.getElementById("lightbox").style.display = "flex";
   }
 }
 
 function closeLightbox(e) {
-  if (e.target.id === "lightbox") {
-    document.getElementById("lightbox").style.display = "none";
-  }
+  if (e.target.id === "lightbox") document.getElementById("lightbox").style.display = "none";
 }
 
 function closeLightboxDirect() {
@@ -177,30 +229,54 @@ function closeLightboxDirect() {
 
 function saveCaption() {
   const val = document.getElementById("lightboxCaptionInput").value;
-  galleryCaptions[currentGalleryIndex] = val;
-  localStorage.setItem(`savedGalCaption_${currentGalleryIndex}`, val);
-  alert("Izoh saqlandi!");
+  const item = galleryItems.find(i => i.id === activeGalleryId);
+  if(item) {
+    item.caption = val;
+    saveGalleryToStorage();
+    alert("Izoh saqlandi!");
+  }
 }
 
-// 8. SAQLANGAN MA'LUMOTLARNI YUKLASH
+// 9. BILLIE EILISH MUSIC PLAYER LOGIC
+function playTrack(index, btnElement) {
+  const player = document.getElementById("bgMusic");
+  const source = document.getElementById("audioSource");
+
+  if (billieTracks[index]) {
+    source.src = billieTracks[index];
+    player.load();
+    player.play();
+
+    // Faol tugmani belgilash
+    document.querySelectorAll(".track-btn").forEach(btn => btn.classList.remove("active"));
+    if (btnElement) btnElement.classList.add("active");
+  }
+}
+
+// 10. SAQLANGAN MA'LUMOTLARNI YUKLASH
 function loadSavedData() {
   checkDailyNote();
 
   const savedColor = localStorage.getItem('customThemeColor');
   if (savedColor) changeThemeColor(savedColor);
 
+  // Profil
   const savedProf = localStorage.getItem("savedProfileImg");
   if (savedProf) {
-    const pImg = document.getElementById("profileImage");
-    if(pImg) pImg.src = savedProf;
+    const imgEl = document.getElementById("profileImage");
+    const placeholder = document.getElementById("profilePlaceholder");
+    const removeBtn = document.getElementById("profileRemoveBtn");
+
+    imgEl.src = savedProf;
+    imgEl.style.display = "block";
+    placeholder.style.display = "none";
+    removeBtn.style.display = "block";
   }
 
-  for (let i = 0; i < 3; i++) {
-    const galImg = localStorage.getItem(`savedGalImg_${i}`);
-    const gEl = document.getElementById(`galImg${i}`);
-    if (galImg && gEl) gEl.src = galImg;
-
-    const cap = localStorage.getItem(`savedGalCaption_${i}`);
-    if (cap) galleryCaptions[i] = cap;
+  // Galereya
+  const savedGal = localStorage.getItem("savedGalleryItems");
+  if (savedGal) {
+    galleryItems = JSON.parse(savedGal);
+    renderGallery();
   }
 }

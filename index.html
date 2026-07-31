@@ -48,10 +48,16 @@
       <!-- PROFIL BO'LIMI -->
       <div class="profile-section">
         <div class="profile-avatar-container" onclick="triggerProfileUpload()">
-          <img id="profileImage" src="https://picsum.photos/150/150?blur=2" alt="N Profile">
+          <img id="profileImage" src="" alt="" style="display:none;">
+          <div id="profilePlaceholder" class="profile-placeholder">📷 Profil rasmi yuklash</div>
           <div class="avatar-overlay">📷 Rasm almashtirish</div>
         </div>
         <input type="file" id="profileUpload" accept="image/*" style="display: none;" onchange="loadProfileImage(event)">
+        
+        <div class="profile-actions" id="profileRemoveBtn" style="display:none;">
+          <button onclick="removeProfileImage()" class="btn-delete-prof">🗑️ Profil rasmini o'chirish</button>
+        </div>
+
         <h1 class="main-title">N Project ✨</h1>
         <p class="love-subtitle">Siz uchun maxsus yaratilgan shaxsiy hudud</p>
       </div>
@@ -81,40 +87,46 @@
         <p id="noteStatus" class="note-status-text"></p>
       </div>
 
-      <!-- 📸 GALEREYA BO'LIMI -->
+      <!-- 📸 CHEKSIZ GALEREYA BO'LIMI -->
       <div class="gallery-section">
         <h3 class="gallery-title">📸 Shaxsiy Galereya</h3>
-        <div class="gallery">
-          <div class="img-card" onclick="openLightbox(0)">
-            <img id="galImg0" src="https://picsum.photos/400/400?random=10" alt="Rasm 1">
-            <span class="upload-badge" onclick="event.stopPropagation(); triggerGalleryUpload(0)">📷 Yuklash</span>
-          </div>
-          <div class="img-card" onclick="openLightbox(1)">
-            <img id="galImg1" src="https://picsum.photos/400/400?random=11" alt="Rasm 2">
-            <span class="upload-badge" onclick="event.stopPropagation(); triggerGalleryUpload(1)">📷 Yuklash</span>
-          </div>
-          <div class="img-card" onclick="openLightbox(2)">
-            <img id="galImg2" src="https://picsum.photos/400/400?random=12" alt="Rasm 3">
-            <span class="upload-badge" onclick="event.stopPropagation(); triggerGalleryUpload(2)">📷 Yuklash</span>
-          </div>
-        </div>
+        
+        <button onclick="triggerGalleryUpload()" class="btn upload-new-btn">➕ Yangi rasm qo'shish</button>
         <input type="file" id="galleryUpload" accept="image/*" style="display: none;" onchange="loadGalleryImage(event)">
+
+        <div id="galleryContainer" class="gallery">
+          <!-- Rasmlar va o'chirish tugmalari shu yerga dinamik qo'shiladi -->
+        </div>
       </div>
 
-      <!-- 🎵 MUSIQA PLEYERI (Billie Eilish - Ocean Eyes) -->
+      <!-- 🎵 MUSIQA PLEYERI (Billie Eilish Top 10 Playlist) -->
       <div class="glass audio-box">
-        <p class="music-title">🎵 Billie Eilish — Ocean Eyes</p>
-        <audio id="bgMusic" controls loop>
-          <source src="https://raw.githubusercontent.com/axtamovvw/audio-host/main/OceanEyes.mp3" type="audio/mpeg">
-          Brauzeringiz audioni qo'llab-quvvatlamaydi.
+        <p class="music-title">🎵 Billie Eilish — Top 10 Qo'shiqlar</p>
+        
+        <audio id="bgMusic" controls style="width: 100%; margin-top: 10px;">
+          <source id="audioSource" src="https://raw.githubusercontent.com/axtamovvw/audio-host/main/OceanEyes.mp3" type="audio/mpeg">
         </audio>
+
+        <p class="playlist-label">👇 Kerakli musiqani tanlang:</p>
+        <div class="playlist-container">
+          <button class="track-btn active" onclick="playTrack(0, this)">1. Ocean Eyes</button>
+          <button class="track-btn" onclick="playTrack(1, this)">2. Bad Guy</button>
+          <button class="track-btn" onclick="playTrack(2, this)">3. Lovely (feat. Khalid)</button>
+          <button class="track-btn" onclick="playTrack(3, this)">4. When the Party's Over</button>
+          <button class="track-btn" onclick="playTrack(4, this)">5. Everything I Wanted</button>
+          <button class="track-btn" onclick="playTrack(5, this)">6. Happier Than Ever</button>
+          <button class="track-btn" onclick="playTrack(6, this)">7. What Was I Made For?</button>
+          <button class="track-btn" onclick="playTrack(7, this)">8. Bury a Friend</button>
+          <button class="track-btn" onclick="playTrack(8, this)">9. You Should See Me in a Crown</button>
+          <button class="track-btn" onclick="playTrack(9, this)">10. TV</button>
+        </div>
       </div>
 
       <button onclick="logout()" class="btn logout-btn">Chiqish</button>
     </div>
   </div>
 
-  <!-- 🔍 LIGHTBOX (RASMNI ASL HOLDA IZOH BILAN KO'RISH) -->
+  <!-- 🔍 LIGHTBOX (RASMNI ASL HOLDA KO'RISH VA IZOH) -->
   <div id="lightbox" class="lightbox-modal" onclick="closeLightbox(event)">
     <div class="lightbox-content" onclick="event.stopPropagation()">
       <span class="lightbox-close" onclick="closeLightboxDirect()">&times;</span>
