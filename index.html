@@ -1,526 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="uz">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>N Project 💖</title>
-
-
-<link rel="stylesheet" href="style.css">
-
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N Project</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
 
-
-<!-- BACKGROUND -->
-
-<div class="background">
-
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-
-</div>
-
-
-
-
-
-<!-- LOADING -->
-
-
-<div class="loader-page" id="loader">
-
-
-<div class="loader-heart">
-
-💖
-
-</div>
-
-
-<h1>
-
-Loading...
-
-</h1>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- LOGIN -->
-
-
-<div class="login-page" id="loginPage">
-
-
-<div class="login-box">
-
-
-<h1>
-
-💖 Welcome 💖
-
-</h1>
-
-
-
-<input
-
-type="text"
-
-id="username"
-
-placeholder="Login">
-
-
-
-<input
-
-type="password"
-
-id="password"
-
-placeholder="Password">
-
-
-
-
-
-<button onclick="login()">
-
-Login
-
-</button>
-
-
-
-<p id="error"></p>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- HOME -->
-
-
-<div class="home-page" id="homePage">
-
-
-<div class="glass">
-
-
-
-
-
-<button class="logout-btn" onclick="logout()">
-
-🚪 Logout
-
-</button>
-
-
-
-
-
-
-<h1 class="letter">
-
-N
-
-</h1>
-
-
-
-
-<h2 class="welcome">
-
-Welcome, N 🌸
-
-</h2>
-
-
-
-
-
-
-
-<!-- PROFILE -->
-
-
-<div class="profile-card">
-
-
-<img src="images/profile.png">
-
-
-<h2>
-
-N
-
-</h2>
-
-
-<p>
-
-My Pink Project 💖
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- CLOCK -->
-
-
-<div class="clock-box">
-
-
-<h2 id="clock">
-
-00:00:00
-
-</h2>
-
-
-<p id="date">
-
-Loading...
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- IMAGE UPLOAD -->
-
-
-<button
-
-class="upload-btn"
-
-onclick="document.getElementById('imageInput').click()">
-
-
-📷 Add Photo
-
-
-</button>
-
-
-
-<input
-
-type="file"
-
-id="imageInput"
-
-accept="image/*"
-
-multiple>
-
-
-
-
-
-
-<div id="gallery">
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- LOVE MESSAGE -->
-
-
-<button
-
-class="message-btn"
-
-onclick="showMessage()">
-
-
-💌 Secret Message
-
-
-</button>
-
-
-
-
-
-
-
-<!-- MAGIC WISH -->
-
-
-<button
-
-class="magic-btn"
-
-onclick="makeWish()">
-
-
-✨ Make a Wish
-
-
-</button>
-
-
-
-
-
-<div class="wish-box" id="wishBox">
-
-
-💖
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- MUSIC -->
-
-
-<button
-
-class="music-btn"
-
-onclick="toggleMusic()">
-
-
-🎵 Music
-
-
-</button>
-
-
-
-
-
-
-<div class="volume-box">
-
-
-🔊
-
-
-<input
-
-type="range"
-
-id="volume"
-
-min="0"
-
-max="1"
-
-step="0.1"
-
-value="1">
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- DARK MODE -->
-
-<div class="color-box">
-
-<p>🎨 Rang tanlash</p>
-
-<button onclick="changeColor('#ff69b4')">💗</button>
-<button onclick="changeColor('#3498db')">💙</button>
-<button onclick="changeColor('#9b59b6')">💜</button>
-<button onclick="changeColor('#2ecc71')">💚</button>
-<button onclick="changeColor('#f1c40f')">💛</button>
-
-</div>
-
-
-<button
-
-class="dark-btn"
-
-onclick="darkMode()">
-
-
-
-🌙 Dark Mode
-
-
-
-</button>
-
-
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- MESSAGE POPUP -->
-
-<div class="popup" id="popup">
-
-    <div class="popup-box">
-
-        <h2>
-        🌸 Hello N 🌸
-        </h2>
-
-        <p>
-        You are amazing<br>
-        Always smile 💖
-        </p>
-
-
-        <button onclick="closePopup()">
-            Close
-        </button>
-
-
+  <!-- LOADER -->
+  <div id="loader" class="loader-wrapper">
+    <div class="heart-loader">💖</div>
+  </div>
+
+  <!-- DARK MODE BUTTON -->
+  <button class="dark-btn" onclick="darkMode()">🌙 Dark Mode</button>
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="login-container">
+    <div class="glass login-box">
+      <h1 class="letter">N</h1>
+      <h2>Xush Kelibsiz ✨</h2>
+      <input type="text" id="username" placeholder="Login (N)">
+      <input type="password" id="password" placeholder="Parol (1234)">
+      <button onclick="login()" class="btn">Kirish</button>
+      <p id="errorMsg" class="error"></p>
     </div>
+  </div>
 
-</div>
+  <!-- HOME PAGE -->
+  <div id="homePage" class="home-container" style="display: none;">
+    <div class="glass home-card">
+      <h1 class="main-title">N Project 💖</h1>
+      
+      <!-- SOAT BLOKI -->
+      <div class="glass clock-box">
+        <h3 id="clock">00:00:00</h3>
+        <p id="date">01-yanvar, 2026</p>
+      </div>
 
+      <!-- ⏳ COUNTDOWN TIMER -->
+      <div class="glass countdown-box">
+        <h3>⏳ Maxsus sanagacha:</h3>
+        <div class="timer-display">
+          <div class="time-card"><span id="days">00</span><small>Kun</small></div>
+          <div class="time-card"><span id="hours">00</span><small>Soat</small></div>
+          <div class="time-card"><span id="minutes">00</span><small>Daqiqa</small></div>
+          <div class="time-card"><span id="seconds">00</span><small>Sekund</small></div>
+        </div>
+      </div>
 
+      <!-- 💌 RANDOM NOTES -->
+      <div class="glass note-box">
+        <h3>💌 Maxsus Xabar</h3>
+        <p id="noteText">Tugmani bosing va yurakdan chiqqan so‘zlarni o‘qing... ✨</p>
+        <button onclick="generateNote()" class="btn note-btn">✨ Yangi xat o‘qish</button>
+      </div>
 
+      <!-- GALEREYA -->
+      <div class="gallery-title">📸 Galereya</div>
+      <div class="gallery">
+        <div class="img-card"><img src="https://picsum.photos/300/300?random=1" alt="Image 1"></div>
+        <div class="img-card"><img src="https://picsum.photos/300/300?random=2" alt="Image 2"></div>
+        <div class="img-card"><img src="https://picsum.photos/300/300?random=3" alt="Image 3"></div>
+      </div>
 
+      <!-- MUSIQA PLEYERI -->
+      <div class="glass audio-box">
+        <p>🎵 Fon Musiqasi</p>
+        <audio id="bgMusic" controls loop>
+          <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+          Brauzeringiz audio elementni qo'llab-quvvatlamaydi.
+        </audio>
+      </div>
 
+      <button onclick="logout()" class="btn logout-btn">Chiqish</button>
+    </div>
+  </div>
 
-
-
-<!-- IMAGE VIEWER -->
-
-
-<div class="image-viewer" id="imageViewer">
-
-
-<span class="close-image" onclick="closeImage()">
-
-✖
-
-</span>
-
-
-<img id="bigImage">
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- MUSIC -->
-
-
-<audio id="music" loop preload="auto">
-
-
-<source src="music.mp3" type="audio/mpeg">
-
-
-</audio>
-
-
-
-
-
-
-
-
-<script src="script.js"></script>
-
-<script src="effects.js"></script>
-
-<script src="darkmode.js"></script>
-
-
+  <script src="script.js"></script>
+  <script src="effects.js"></script>
+  <script src="darkmode.js"></script>
 </body>
-
 </html>

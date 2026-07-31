@@ -1,73 +1,60 @@
-/* ==================================
-       💖 N PROJECT EFFECTS CSS
-================================== */
+// ===============================
+// 💗 FLOATING HEARTS
+// ===============================
+function createHeart() {
+  let heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = ["💗", "💖", "💕", "❤️"][Math.floor(Math.random() * 4)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+  heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+  document.body.appendChild(heart);
 
-/* 💗 FLOATING HEARTS ANIMATION */
-.heart {
-  position: fixed;
-  bottom: -50px;
-  pointer-events: none;
-  z-index: 20;
-  animation: heartRise linear forwards;
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
 }
+setInterval(createHeart, 900);
 
-@keyframes heartRise {
-  0% {
-    transform: translateY(0) scale(0.8);
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-115vh) scale(1.2);
-    opacity: 0;
-  }
-}
+// ===============================
+// 🌸 SAKURA FALL
+// ===============================
+function createSakura() {
+  let leaf = document.createElement("div");
+  leaf.className = "leaf";
+  leaf.innerHTML = ["🌸", "🌺", "🍃"][Math.floor(Math.random() * 3)];
+  leaf.style.left = Math.random() * 100 + "vw";
+  leaf.style.fontSize = (Math.random() * 15 + 20) + "px";
+  leaf.style.animationDuration = (Math.random() * 5 + 5) + "s";
+  document.body.appendChild(leaf);
 
-/* 🌸 SAKURA FALL ANIMATION */
-.leaf {
-  position: fixed;
-  top: -50px;
-  pointer-events: none;
-  z-index: 20;
-  animation: sakuraFall linear forwards;
+  setTimeout(() => {
+    leaf.remove();
+  }, 12000);
 }
+setInterval(createSakura, 1200);
 
-@keyframes sakuraFall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(115vh) rotate(720deg);
-    opacity: 0;
-  }
-}
+// ===============================
+// ✨ MOUSE STAR TRAIL
+// ===============================
+document.addEventListener("mousemove", (e) => {
+  let star = document.createElement("div");
+  star.className = "star";
+  star.style.left = e.pageX + "px";
+  star.style.top = e.pageY + "px";
+  document.body.appendChild(star);
 
-/* ✨ MOUSE STAR STYLES */
-.star {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: white;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  box-shadow: 
-    0 0 10px white, 
-    0 0 20px var(--main-color), 
-    0 0 35px var(--second-color);
-  animation: starFade 0.8s ease-out forwards;
-}
+  setTimeout(() => {
+    star.remove();
+  }, 800);
+});
 
-@keyframes starFade {
-  0% {
-    transform: scale(1) translate(0, 0);
-    opacity: 1;
+// ===============================
+// 💫 RANDOM N SCALE ANIMATION
+// ===============================
+setInterval(() => {
+  let n = document.querySelector(".letter");
+  if (n) {
+    n.style.transform = `scale(${1 + Math.random() / 15})`;
   }
-  100% {
-    transform: scale(0) translate(0, 15px);
-    opacity: 0;
-  }
-}
+}, 1000);
