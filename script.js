@@ -1,21 +1,27 @@
-// ==================================
-// 1. LOADER & INITIALIZATION
-// ==================================
+let currentGalleryIndex = 0;
+let galleryCaptions = ["", "", ""];
+
+// 1. INITIALIZATION & LOADER
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   if (loader) {
     setTimeout(() => {
       loader.style.opacity = "0";
       setTimeout(() => loader.style.display = "none", 600);
-    }, 1000);
+    }, 800);
   }
   updateClock();
   updateCountdown();
+  loadSavedData();
 });
 
-// ==================================
-// 2. LOGIN / LOGOUT LOGIC
-// ==================================
+// 2. DINAMIK RANGNI O'ZGARTIRISH
+function changeThemeColor(colorHex) {
+  document.documentElement.style.setProperty('--main-color', colorHex);
+  localStorage.setItem('customThemeColor', colorHex);
+}
+
+// 3. LOGIN / LOGOUT LOGIC
 function login() {
   const usernameInput = document.getElementById('username').value.trim();
   const passwordInput = document.getElementById('password').value.trim();
@@ -29,7 +35,7 @@ function login() {
     if (errorMsg) errorMsg.innerText = '';
   } else {
     if (errorMsg) {
-      errorMsg.innerText = '⚠️ Yagonam, login yoki parol noto‘g‘ri!';
+      errorMsg.innerText = '⚠️ Ma'lumotlar noto‘g‘ri kiritildi!';
     }
   }
 }
@@ -41,9 +47,7 @@ function logout() {
   document.getElementById('password').value = '';
 }
 
-// ==================================
-// 3. REAL-TIME CLOCK
-// ==================================
+// 4. SOAT VA TAYMER
 function updateClock() {
   const now = new Date();
   const hours = String(now.getHours()).padStart(2, '0');
@@ -59,37 +63,7 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 
-// ==================================
-// 4. ROMANTIC LOVE NOTES
-// ==================================
-const notes = [
-  "Sening tabassuming — mening har bir kunimning eng go'zal quyoshi... 🌸",
-  "Dunyoda qancha yulduz bo'lsa ham, mening osmonimda faqat sen porlaysan. ✨",
-  "Har bir urayotgan yurak urishim senga atalgan, yagonam... 💖",
-  "Sen bilan o'tgan har bir soniya — hayotimning eng qadrli tuhfasi. 🌟",
-  "Bugun ham, ertaga ham, har doim seni jonimdan ortiq sevaman... 🍀",
-  "Sening borliging uchun Xudoga har kuni tashakkur aytaman. 💖",
-  "Kuyib ketgudek sevaman seni, mening erkatoyim! ✨"
-];
-
-function generateNote() {
-  const noteText = document.getElementById("noteText");
-  if (!noteText) return;
-
-  noteText.style.opacity = "0";
-  setTimeout(() => {
-    const randomIndex = Math.floor(Math.random() * notes.length);
-    noteText.innerText = notes[randomIndex];
-    noteText.style.opacity = "1";
-  }, 350);
-}
-
-// ==================================
-// 5. COUNTDOWN TIMER LOGIC
-// ==================================
-// Maxsus kunizni shu yerga kiritishingiz mumkin: (Yil, Oy-1, Kun)
 const targetDate = new Date(2026, 11, 31, 0, 0, 0).getTime();
-
 function updateCountdown() {
   const now = new Date().getTime();
   const difference = targetDate - now;
@@ -109,3 +83,110 @@ function updateCountdown() {
   }
 }
 setInterval(updateCountdown, 1000);
+
+// 5. 24 SOATLIK DAILY NOTE (ESLATMA)
+function saveDailyNote() {
+  const noteVal = document.getElementById("dailyNoteInput").value;
+  const noteData = {
+    text: noteVal,
+    timestamp: new Date().getTime()
+  };
+  localStorage.setItem("userDailyNote", JSON.stringify(noteData));
+  
+  const status = document.getElementById("noteStatus");
+  status.innerText = "✓ Eslatma saqlandi (24 soat davomida saqlanadi)";
+  setTimeout(() => status.innerText = "", 3000);
+}
+
+function checkDailyNote() {
+  const saved = localStorage.getItem("userDailyNote");
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    const now = new Date().getTime();
+    const twentyFourHours = 24 * 60 * 60 * 1000;
+
+    if (now - parsed.timestamp < twentyFourHours) {
+      document.getElementById("dailyNoteInput").value = parsed.text;
+    } else {
+      localStorage.removeItem("userDailyNote");
+      document.getElementById("dailyNoteInput").value = "";
+    }
+  }
+}
+
+// 6. PROFIL VA GALEREYA RASMLARINI YUKLASH
+function triggerProfileUpload() {
+  document.getElementById("profileUpload").click();
+}
+
+function loadProfileImage(event) {
+  const reader = new FileReader();
+  reader.onload = function() {
+    document.getElementById("profileImage").src = reader.result;
+    localStorage.setItem("savedProfileImg", reader.result);
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+let targetGalleryIndexToUpload = 0;
+function triggerGalleryUpload(index) {
+  targetGalleryIndexToUpload = index;
+  document.getElementById("galleryUpload").click();
+}
+
+function loadGalleryImage(event) {
+  const reader = new FileReader();
+  reader.onload = function() {
+    document.getElementById(`galImg${targetGalleryIndexToUpload}`).src = reader.result;
+    localStorage.setItem(`savedGalImg_${targetGalleryIndexToUpload}`, reader.result);
+  };
+  reader.readAsDataURL(event.target.files[0]);
+}
+
+// 7. LIGHTBOX (ASL HOLDA KO'RISH VA IZOH QO'SHISH)
+function openLightbox(index) {
+  currentGalleryIndex = index;
+  const imgSrc = document.getElementById(`galImg${index}`).src;
+  document.getElementById("lightboxImg").src = imgSrc;
+  document.getElementById("lightboxCaptionInput").value = galleryCaptions[index] || "";
+  document.getElementById("lightbox").style.display = "flex";
+}
+
+function closeLightbox(e) {
+  if (e.target.id === "lightbox") {
+    document.getElementById("lightbox").style.display = "none";
+  }
+}
+
+function closeLightboxDirect() {
+  document.getElementById("lightbox").style.display = "none";
+}
+
+function saveCaption() {
+  const val = document.getElementById("lightboxCaptionInput").value;
+  galleryCaptions[currentGalleryIndex] = val;
+  localStorage.setItem(`savedGalCaption_${currentGalleryIndex}`, val);
+  alert("Izoh saqlandi!");
+}
+
+// 8. SAQLANGAN MA'LUMOTLARNI YUKLASH
+function loadSavedData() {
+  checkDailyNote();
+
+  // Rang
+  const savedColor = localStorage.getItem('customThemeColor');
+  if (savedColor) changeThemeColor(savedColor);
+
+  // Profil
+  const savedProf = localStorage.getItem("savedProfileImg");
+  if (savedProf) document.getElementById("profileImage").src = savedProf;
+
+  // Galereya & Izohlar
+  for (let i = 0; i < 3; i++) {
+    const galImg = localStorage.getItem(`savedGalImg_${i}`);
+    if (galImg) document.getElementById(`galImg${i}`).src = galImg;
+
+    const cap = localStorage.getItem(`savedGalCaption_${i}`);
+    if (cap) galleryCaptions[i] = cap;
+  }
+}

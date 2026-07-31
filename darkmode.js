@@ -4,10 +4,10 @@ function darkMode() {
 
   if (document.body.classList.contains("dark")) {
     localStorage.setItem("theme", "dark");
-    if (darkBtn) darkBtn.innerText = "☀️ Day Mood";
+    if (darkBtn) darkBtn.innerText = "☀️ Kunduzi rejim";
   } else {
     localStorage.setItem("theme", "light");
-    if (darkBtn) darkBtn.innerText = "🌙 Night Mood";
+    if (darkBtn) darkBtn.innerText = "🌙 Tungi rejim";
   }
 }
 
@@ -17,6 +17,6 @@ window.addEventListener("load", () => {
 
   if (theme === "dark") {
     document.body.classList.add("dark");
-    if (darkBtn) darkBtn.innerText = "☀️ Day Mood";
+    if (darkBtn) darkBtn.innerText = "☀️ Kunduzi rejim";
   }
 });
