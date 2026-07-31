@@ -95,30 +95,23 @@
         <input type="file" id="galleryUpload" accept="image/*" style="display: none;" onchange="loadGalleryImage(event)">
 
         <div id="galleryContainer" class="gallery">
-          <!-- Rasmlar va o'chirish tugmalari shu yerga dinamik qo'shiladi -->
+          <!-- Rasmlar shu yerga kelib tushadi -->
         </div>
       </div>
 
-      <!-- 🎵 MUSIQA PLEYERI (Billie Eilish Top 10 Playlist) -->
+      <!-- 🎵 MUSIQA PLEYERI (5 TA MUSIQA) -->
       <div class="glass audio-box">
-        <p class="music-title">🎵 Billie Eilish — Top 10 Qo'shiqlar</p>
+        <p class="music-title">🎵 Musiqa Pleyeri</p>
         
-        <audio id="bgMusic" controls style="width: 100%; margin-top: 10px;">
-          <source id="audioSource" src="https://raw.githubusercontent.com/axtamovvw/audio-host/main/OceanEyes.mp3" type="audio/mpeg">
-        </audio>
+        <audio id="bgMusic" controls style="width: 100%; margin-top: 10px;"></audio>
 
-        <p class="playlist-label">👇 Kerakli musiqani tanlang:</p>
+        <p class="playlist-label">👇 Qo'shiqni tanlang:</p>
         <div class="playlist-container">
-          <button class="track-btn active" onclick="playTrack(0, this)">1. Ocean Eyes</button>
-          <button class="track-btn" onclick="playTrack(1, this)">2. Bad Guy</button>
-          <button class="track-btn" onclick="playTrack(2, this)">3. Lovely (feat. Khalid)</button>
-          <button class="track-btn" onclick="playTrack(3, this)">4. When the Party's Over</button>
-          <button class="track-btn" onclick="playTrack(4, this)">5. Everything I Wanted</button>
-          <button class="track-btn" onclick="playTrack(5, this)">6. Happier Than Ever</button>
-          <button class="track-btn" onclick="playTrack(6, this)">7. What Was I Made For?</button>
-          <button class="track-btn" onclick="playTrack(7, this)">8. Bury a Friend</button>
-          <button class="track-btn" onclick="playTrack(8, this)">9. You Should See Me in a Crown</button>
-          <button class="track-btn" onclick="playTrack(9, this)">10. TV</button>
+          <button class="track-btn active" onclick="playTrack(0, this)">1-Musiqa</button>
+          <button class="track-btn" onclick="playTrack(1, this)">2-Musiqa</button>
+          <button class="track-btn" onclick="playTrack(2, this)">3-Musiqa</button>
+          <button class="track-btn" onclick="playTrack(3, this)">4-Musiqa</button>
+          <button class="track-btn" onclick="playTrack(4, this)">5-Musiqa</button>
         </div>
       </div>
 
@@ -126,7 +119,7 @@
     </div>
   </div>
 
-  <!-- 🔍 LIGHTBOX (RASMNI ASL HOLDA KO'RISH VA IZOH) -->
+  <!-- 🔍 LIGHTBOX -->
   <div id="lightbox" class="lightbox-modal" onclick="closeLightbox(event)">
     <div class="lightbox-content" onclick="event.stopPropagation()">
       <span class="lightbox-close" onclick="closeLightboxDirect()">&times;</span>

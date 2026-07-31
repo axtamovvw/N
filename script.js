@@ -1,18 +1,13 @@
-let galleryItems = []; // { id, src, caption }
+let galleryItems = []; 
 let activeGalleryId = null;
 
-// BILLIE EILISH TOP 10 PLAYLIST AUDIOS
-const billieTracks = [
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/OceanEyes.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/BadGuy.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/Lovely.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/WhenThePartysOver.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/EverythingIWanted.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/HappierThanEver.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/WhatWasIMadeFor.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/BuryAFriend.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/YouShouldSeeMeInACrown.mp3",
-  "https://raw.githubusercontent.com/axtamovvw/audio-host/main/TV.mp3"
+// 5 TA MUSIQA FAYLLARI RO'YXATI (music/ papkasi ichida)
+const localTracks = [
+  "music/track1.mp3",
+  "music/track2.mp3",
+  "music/track3.mp3",
+  "music/track4.mp3",
+  "music/track5.mp3"
 ];
 
 // 1. INITIALIZATION & LOADER
@@ -237,17 +232,14 @@ function saveCaption() {
   }
 }
 
-// 9. BILLIE EILISH MUSIC PLAYER LOGIC
+// 9. 5 TA MUSIQA IJRO ETISH LOGIKASI
 function playTrack(index, btnElement) {
   const player = document.getElementById("bgMusic");
-  const source = document.getElementById("audioSource");
 
-  if (billieTracks[index]) {
-    source.src = billieTracks[index];
-    player.load();
+  if (localTracks[index]) {
+    player.src = localTracks[index];
     player.play();
 
-    // Faol tugmani belgilash
     document.querySelectorAll(".track-btn").forEach(btn => btn.classList.remove("active"));
     if (btnElement) btnElement.classList.add("active");
   }
