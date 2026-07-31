@@ -1,18 +1,25 @@
 let currentGalleryIndex = 0;
 let galleryCaptions = ["", "", ""];
 
-// 1. INITIALIZATION & LOADER
-window.addEventListener("load", () => {
+// 1. INITIALIZATION & LOADER (Kafolatlangan yopilish)
+function hideLoader() {
   const loader = document.getElementById("loader");
-  if (loader) {
+  if (loader && loader.style.display !== "none") {
+    loader.style.opacity = "0";
     setTimeout(() => {
-      loader.style.opacity = "0";
-      setTimeout(() => loader.style.display = "none", 600);
-    }, 800);
+      loader.style.display = "none";
+    }, 500);
   }
-  updateClock();
-  updateCountdown();
-  loadSavedData();
+}
+
+// Har qanday holatda 1 soniyadan so'ng loaderni majburiy yopadi
+setTimeout(hideLoader, 1000);
+
+window.addEventListener("DOMContentLoaded", () => {
+  hideLoader();
+  try { updateClock(); } catch(e) {}
+  try { updateCountdown(); } catch(e) {}
+  try { loadSavedData(); } catch(e) {}
 });
 
 // 2. DINAMIK RANGNI O'ZGARTIRISH
@@ -35,7 +42,7 @@ function login() {
     if (errorMsg) errorMsg.innerText = '';
   } else {
     if (errorMsg) {
-      errorMsg.innerText = '⚠️ Ma'lumotlar noto‘g‘ri kiritildi!';
+      errorMsg.innerText = '⚠️ Ma\'lumotlar noto‘g‘ri kiritildi!';
     }
   }
 }
@@ -84,7 +91,7 @@ function updateCountdown() {
 }
 setInterval(updateCountdown, 1000);
 
-// 5. 24 SOATLIK DAILY NOTE (ESLATMA)
+// 5. 24 SOATLIK DAILY NOTE
 function saveDailyNote() {
   const noteVal = document.getElementById("dailyNoteInput").value;
   const noteData = {
@@ -94,8 +101,10 @@ function saveDailyNote() {
   localStorage.setItem("userDailyNote", JSON.stringify(noteData));
   
   const status = document.getElementById("noteStatus");
-  status.innerText = "✓ Eslatma saqlandi (24 soat davomida saqlanadi)";
-  setTimeout(() => status.innerText = "", 3000);
+  if(status) {
+    status.innerText = "✓ Eslatma saqlandi (24 soat davomida saqlanadi)";
+    setTimeout(() => status.innerText = "", 3000);
+  }
 }
 
 function checkDailyNote() {
@@ -106,15 +115,17 @@ function checkDailyNote() {
     const twentyFourHours = 24 * 60 * 60 * 1000;
 
     if (now - parsed.timestamp < twentyFourHours) {
-      document.getElementById("dailyNoteInput").value = parsed.text;
+      const noteInput = document.getElementById("dailyNoteInput");
+      if(noteInput) noteInput.value = parsed.text;
     } else {
       localStorage.removeItem("userDailyNote");
-      document.getElementById("dailyNoteInput").value = "";
+      const noteInput = document.getElementById("dailyNoteInput");
+      if(noteInput) noteInput.value = "";
     }
   }
 }
 
-// 6. PROFIL VA GALEREYA RASMLARINI YUKLASH
+// 6. PROFIL VA GALEREYA RASMLARI
 function triggerProfileUpload() {
   document.getElementById("profileUpload").click();
 }
@@ -125,7 +136,7 @@ function loadProfileImage(event) {
     document.getElementById("profileImage").src = reader.result;
     localStorage.setItem("savedProfileImg", reader.result);
   };
-  reader.readAsDataURL(event.target.files[0]);
+  if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
 }
 
 let targetGalleryIndexToUpload = 0;
@@ -140,16 +151,18 @@ function loadGalleryImage(event) {
     document.getElementById(`galImg${targetGalleryIndexToUpload}`).src = reader.result;
     localStorage.setItem(`savedGalImg_${targetGalleryIndexToUpload}`, reader.result);
   };
-  reader.readAsDataURL(event.target.files[0]);
+  if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
 }
 
-// 7. LIGHTBOX (ASL HOLDA KO'RISH VA IZOH QO'SHISH)
+// 7. LIGHTBOX (RASMNI ASL HOLICHA KO'RISH)
 function openLightbox(index) {
   currentGalleryIndex = index;
-  const imgSrc = document.getElementById(`galImg${index}`).src;
-  document.getElementById("lightboxImg").src = imgSrc;
-  document.getElementById("lightboxCaptionInput").value = galleryCaptions[index] || "";
-  document.getElementById("lightbox").style.display = "flex";
+  const imgEl = document.getElementById(`galImg${index}`);
+  if(imgEl) {
+    document.getElementById("lightboxImg").src = imgEl.src;
+    document.getElementById("lightboxCaptionInput").value = galleryCaptions[index] || "";
+    document.getElementById("lightbox").style.display = "flex";
+  }
 }
 
 function closeLightbox(e) {
@@ -173,18 +186,19 @@ function saveCaption() {
 function loadSavedData() {
   checkDailyNote();
 
-  // Rang
   const savedColor = localStorage.getItem('customThemeColor');
   if (savedColor) changeThemeColor(savedColor);
 
-  // Profil
   const savedProf = localStorage.getItem("savedProfileImg");
-  if (savedProf) document.getElementById("profileImage").src = savedProf;
+  if (savedProf) {
+    const pImg = document.getElementById("profileImage");
+    if(pImg) pImg.src = savedProf;
+  }
 
-  // Galereya & Izohlar
   for (let i = 0; i < 3; i++) {
     const galImg = localStorage.getItem(`savedGalImg_${i}`);
-    if (galImg) document.getElementById(`galImg${i}`).src = galImg;
+    const gEl = document.getElementById(`galImg${i}`);
+    if (galImg && gEl) gEl.src = galImg;
 
     const cap = localStorage.getItem(`savedGalCaption_${i}`);
     if (cap) galleryCaptions[i] = cap;
